@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["nativeTypes"]
+}
+
+model User {
+  id               String   @id @default(cuid()) @db.VarChar(25)
+  email            String   @unique
+  passwordHash     String
+  firstName        String   @db.VarChar(200)
+  lastName         String   @db.VarChar(200)
+  height           Int
+  weight           Float
+  dateOfBirth      DateTime
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  isActive         Boolean  @default(true)
+  refreshTokenHash String?
+  goals            Goal[]
+  results          Result[]
+}
+
+model Goal {
+  id          String   @id @default(cuid()) @db.VarChar(25)
+  userId      String   @db.VarChar(25)
+  user        User     @relation(fields: [userId], references: [id])
+  description String
+  createdAt   DateTime @default(now())
+}
+
+model Menu {
+  id            String   @id @default(cuid()) @db.VarChar(25)
+  meals         Meal[]
+  weekStartDate DateTime
+}
+
+model Meal {
+  id         String          @id @default(cuid()) @db.VarChar(25)
+  name       String          @db.VarChar(200)
+  components MealComponent[]
+  menus      Menu[]
+  recipe     String?
+}
+
+model MealComponent {
+  id            String @id @default(cuid()) @db.VarChar(25)
+  name          String @db.VarChar(200)
+  meals         Meal[]
+  calories      Int
+  proteins      Int
+  carbohydrates Int
+  fat           Int
+}
+
+model Result {
+  id             String   @id @default(cuid()) @db.VarChar(25)
+  userId         String   @db.VarChar(25)
+  user           User     @relation(fields: [userId], references: [id])
+  date           DateTime @default(now())
+  weight         Float
+  bodyFatPercent Float
+}
+
+model ShoppingList {
+  id    String             @id @default(cuid()) @db.VarChar(25)
+  items ShoppingListItem[]
+}
+
+model ShoppingListItem {
+  id            String         @id @default(cuid()) @db.VarChar(25)
+  shoppingLists ShoppingList[]
+}
