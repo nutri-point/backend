@@ -6,12 +6,17 @@ import {
   Put,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { GoalService } from './goal.service';
 import { CreateGoalDto } from './dto/create-goal.dto';
 import { UpdateGoalDto } from './dto/update-goal.dto';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { FindByUserParams } from './params/find-by-user.params';
+import { RoleGuard } from 'auth/roles/role.guard';
+import { Role } from 'auth/roles/role.decorator';
+import { RoleRank } from 'auth/roles/role.enum';
+import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 
 @ApiTags('Goal')
 @Controller('goal')
@@ -23,6 +28,9 @@ export class GoalController {
     return this.goalService.create(createGoalDto);
   }
 
+  @Role(RoleRank.Guest)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @ApiBearerAuth()
   @Get()
   findAll() {
     return this.goalService.findAll();

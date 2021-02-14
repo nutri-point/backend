@@ -1,6 +1,5 @@
 import { PrismaService } from 'shared/prisma.service';
 import { CryptoService } from 'shared/crypto.service';
-// import { GqlAuthGuard } from '../../guards/gql-auth.guard';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -10,6 +9,8 @@ import { SecurityConfig } from 'configs/config.interface';
 import { UserModule } from 'user/user.module';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { RoleGuard } from './roles/role.guard';
 
 @Module({
   imports: [
@@ -32,10 +33,11 @@ import { AuthController } from './auth.controller';
   providers: [
     AuthService,
     JwtStrategy,
-    // GqlAuthGuard,
+    JwtAuthGuard,
+    RoleGuard,
     CryptoService,
     PrismaService,
   ],
-  // exports: [GqlAuthGuard],
+  exports: [JwtAuthGuard, RoleGuard],
 })
 export class AuthModule {}

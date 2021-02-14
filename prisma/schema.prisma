@@ -26,6 +26,8 @@ model User {
   refreshTokenHash String?
   goals            Goal[]
   results          Result[]
+  roleId           Int?
+  role             Role?    @relation(fields: [roleId], references: [id])
 }
 
 model Goal {
@@ -77,4 +79,11 @@ model ShoppingList {
 model ShoppingListItem {
   id            String         @id @default(cuid()) @db.VarChar(25)
   shoppingLists ShoppingList[]
+}
+
+model Role {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(50)
+  User User[]
+  rank Int
 }

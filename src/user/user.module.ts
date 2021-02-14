@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { PrismaService } from 'shared/prisma.service';
-import { IsExistingUserConstraint } from 'validation/is-existing-user-id.decorator';
+import { IsExistingUserConstraint } from './validation';
 
 @Module({
   controllers: [UserController],
