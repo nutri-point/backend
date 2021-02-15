@@ -1,1 +1,1 @@
-export * from './is-cuid.decorator';
+export * from './is-cuid.validation';
