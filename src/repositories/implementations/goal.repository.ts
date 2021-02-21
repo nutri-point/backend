@@ -42,13 +42,13 @@ export class GoalRepository implements IGoalRepository {
     return this.prisma.goal.findMany({ where: { userId } });
   }
 
-  add(entity: EntityAdd<Goal>): Promise<Goal> {
+  add(entity: AddType<Goal>): Promise<Goal> {
     return this.prisma.goal.create({
       data: entity,
     });
   }
 
-  update(id: string, entity: EntityUpdate<Goal>): Promise<Goal> {
+  update(id: string, entity: UpdateType<Goal>): Promise<Goal> {
     return this.prisma.goal.update({
       data: entity,
       where: { id },
