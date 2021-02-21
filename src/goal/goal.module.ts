@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { GoalService } from './goal.service';
 import { GoalController } from './goal.controller';
 import { PrismaService } from 'shared/prisma.service';
+import { GoalRepository } from 'repositories/implementations/goal.repository';
 
 @Module({
   controllers: [GoalController],
-  providers: [GoalService, PrismaService],
+  providers: [GoalService, PrismaService, GoalRepository],
 })
 export class GoalModule {}

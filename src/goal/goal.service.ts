@@ -1,63 +1,39 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
-import { Goal, Prisma, User } from '@prisma/client';
-import { PrismaService } from 'shared/prisma.service';
-import { PrismaSelectType } from 'utils/types';
+import { Goal } from '@prisma/client';
 import { CreateGoalDto } from './dto/create-goal.dto';
 import { UpdateGoalDto } from './dto/update-goal.dto';
-import { RoleName } from 'auth/roles/role.enum';
-
-const select: PrismaSelectType<Goal> = {
-  id: true,
-  userId: true,
-  description: true,
-  createdAt: true,
-};
+import { GoalRepository } from 'repositories/implementations/goal.repository';
 
 @Injectable()
 export class GoalService {
   constructor(
-    private readonly prisma: PrismaService,
+    private readonly goalRepository: GoalRepository,
     @Inject(REQUEST) private readonly request: Request,
   ) {}
 
-  async findAll(): Promise<PrismaSelectType<Goal>[]> {
-    const user = this.request.user as User;
-    const role = await this.prisma.role.findUnique({
-      where: { id: user.roleId },
-    });
-
-    let where: Prisma.GoalWhereInput | undefined;
-    if (role.name !== RoleName.Admin) {
-      where = { userId: user.id };
-    }
-
-    return this.prisma.goal.findMany({ select, where });
+  async findAll(): Promise<Partial<Goal>[]> {
+    return this.goalRepository.getAll();
   }
 
   async findOne(id: string) {
-    return this.prisma.goal.findUnique({ where: { id } });
+    return this.goalRepository.getById(id);
   }
 
   async findByUserId(userId: string) {
-    return this.prisma.goal.findMany({ where: { userId } });
+    return this.goalRepository.getByUserId(userId);
   }
 
   async create(createGoalDto: CreateGoalDto) {
-    return this.prisma.goal.create({
-      data: createGoalDto,
-    });
+    return this.goalRepository.add(createGoalDto);
   }
 
   async update(id: string, updateGoalDto: UpdateGoalDto) {
-    return this.prisma.goal.update({
-      data: updateGoalDto,
-      where: { id },
-    });
+    return this.goalRepository.update(id, updateGoalDto);
   }
 
   async remove(id: string) {
-    return this.prisma.goal.delete({ where: { id } });
+    return this.goalRepository.delete(id);
   }
 }
