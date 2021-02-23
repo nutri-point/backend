@@ -11,14 +11,14 @@ import { PrismaService } from 'services';
 @ValidatorConstraint({ async: true })
 @Injectable()
 export class IsExistingUserConstraint implements ValidatorConstraintInterface {
-  // constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async validate(userId: any) {
     if (typeof userId !== 'string') return false;
 
-    // const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
 
-    return !!true;
+    return !!user;
   }
 
   defaultMessage({ value }: ValidationArguments) {
