@@ -6,19 +6,19 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { PrismaService } from 'shared/prisma.service';
+import { PrismaService } from 'services';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
 export class IsExistingRoleConstraint implements ValidatorConstraintInterface {
-  constructor(private readonly prisma: PrismaService) {}
+  // constructor(private readonly prisma: PrismaService) {}
 
   async validate(roleId: any) {
     if (typeof roleId !== 'number') return false;
 
-    const role = await this.prisma.role.findUnique({ where: { id: roleId } });
+    // const role = await this.prisma.role.findUnique({ where: { id: roleId } });
 
-    return !!role;
+    return !!true;
   }
 
   defaultMessage({ value }: ValidationArguments) {

@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { User } from '@prisma/client';
-import { PrismaService } from 'shared/prisma.service';
 import { RoleRank } from './role.enum';
 import { ROLE_KEY } from './role.decorator';
+import { PrismaService } from 'services';
 
 @Injectable()
 export class RoleGuard implements CanActivate {

@@ -1,9 +1,10 @@
+import { Injectable } from '@nestjs/common';
 import { Goal, User } from '@prisma/client';
-import { PrismaService } from 'shared/prisma.service';
-import { IGoalRepository } from 'repositories/interfaces/goal.repository';
+import { PrismaService } from 'services';
+import { AddType, IGoalRepository, UpdateType } from 'repositories';
 import { RoleRepository } from './role.repository';
-import { AddType, UpdateType } from 'repositories/interfaces/repository';
 
+@Injectable()
 export class GoalRepository implements IGoalRepository {
   constructor(
     private readonly prisma: PrismaService,

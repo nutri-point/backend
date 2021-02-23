@@ -1,5 +1,3 @@
-import { PrismaService } from 'shared/prisma.service';
-import { CryptoService } from 'shared/crypto.service';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -11,6 +9,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RoleGuard } from './roles/role.guard';
+import { CryptoService, PrismaService } from 'services';
 
 @Module({
   imports: [

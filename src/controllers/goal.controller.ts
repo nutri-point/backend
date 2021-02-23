@@ -8,15 +8,14 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { GoalService } from './goal.service';
-import { CreateGoalDto } from './dto/create-goal.dto';
-import { UpdateGoalDto } from './dto/update-goal.dto';
 import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
-import { FindByUserParams } from './params/find-by-user.params';
 import { RoleGuard } from 'auth/roles/role.guard';
 import { Role } from 'auth/roles/role.decorator';
 import { RoleRank } from 'auth/roles/role.enum';
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
+import { GoalService } from 'services';
+import { CreateGoalDto, UpdateGoalDto } from 'dtos';
+import { FindByUserParams } from './params/find-by-user.params';
 
 @ApiTags('Goal')
 @UseGuards(JwtAuthGuard, RoleGuard)

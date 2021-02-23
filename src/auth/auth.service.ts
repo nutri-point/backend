@@ -12,10 +12,9 @@ import { SecurityConfig } from 'configs/config.interface';
 import { SignUpDto } from './dto/sign-up.dto';
 
 // Services
-import { CryptoService } from 'shared/crypto.service';
-import { PrismaService } from 'shared/prisma.service';
 import { UserService } from 'user/user.service';
 import { ConfigService } from '@nestjs/config';
+import { CryptoService, PrismaService } from 'services';
 
 @Injectable()
 export class AuthService {
