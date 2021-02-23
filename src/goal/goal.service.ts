@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
-import { Goal } from '@prisma/client';
+import { User } from '@prisma/client';
 import { CreateGoalDto } from './dto/create-goal.dto';
 import { UpdateGoalDto } from './dto/update-goal.dto';
 import { GoalRepository } from 'repositories/implementations/goal.repository';
+import { GetGoalDto } from './dto/get-goal.dto';
 
 @Injectable()
 export class GoalService {
@@ -13,27 +14,37 @@ export class GoalService {
     @Inject(REQUEST) private readonly request: Request,
   ) {}
 
-  async findAll(): Promise<Partial<Goal>[]> {
-    return this.goalRepository.getAll();
+  async findAll() {
+    const user = this.request.user as User;
+    const models = await this.goalRepository.getAll(user);
+    const dtos = models.map((model) => new GetGoalDto(model));
+
+    return dtos;
   }
 
   async findOne(id: string) {
-    return this.goalRepository.getById(id);
+    const model = await this.goalRepository.getById(id);
+    const dto = new GetGoalDto(model);
+
+    return dto;
   }
 
   async findByUserId(userId: string) {
-    return this.goalRepository.getByUserId(userId);
+    const models = await this.goalRepository.getByUserId(userId);
+    const dtos = models.map((model) => new GetGoalDto(model));
+
+    return dtos;
   }
 
   async create(createGoalDto: CreateGoalDto) {
-    return this.goalRepository.add(createGoalDto);
+    await this.goalRepository.add(createGoalDto);
   }
 
   async update(id: string, updateGoalDto: UpdateGoalDto) {
-    return this.goalRepository.update(id, updateGoalDto);
+    await this.goalRepository.update(id, updateGoalDto);
   }
 
   async remove(id: string) {
-    return this.goalRepository.delete(id);
+    await this.goalRepository.delete(id);
   }
 }
