@@ -3,7 +3,7 @@ import { User } from '@prisma/client';
 import { PrismaService } from 'services';
 import { PrismaSelectType } from 'utils/types';
 
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto } from 'dtos';
 
 const select: PrismaSelectType<User> = {
   id: true,

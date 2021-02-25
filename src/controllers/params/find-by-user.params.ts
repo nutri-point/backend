@@ -1,5 +1,5 @@
-import { IsCUID } from 'shared/validation';
-import { IsExistingUser } from 'user/validation';
+import { IsCUID } from 'validation';
+import { IsExistingUser } from 'validation';
 
 export class FindByUserParams {
   @IsExistingUser()

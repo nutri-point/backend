@@ -1,10 +1,10 @@
 import { IsNumber, IsString, MaxLength } from 'class-validator';
-import { MAX_NAME_LENGTH } from './constants';
-import { IsCUID } from 'shared/validation';
+import { MEAL_MAX_NAME_LENGTH } from './constants';
+import { IsCUID } from 'validation';
 
 export class UpdateMealDto {
   @IsString()
-  @MaxLength(MAX_NAME_LENGTH)
+  @MaxLength(MEAL_MAX_NAME_LENGTH)
   name: string;
 
   @IsString()

@@ -1,38 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { Goal, User } from '@prisma/client';
 import { PrismaService } from 'services';
-import { AddType, IGoalRepository, UpdateType } from 'repositories';
+import { AddType, IRepository, UpdateType } from './repository.interface';
 import { RoleRepository } from './role.repository';
 
 @Injectable()
-export class GoalRepository implements IGoalRepository {
+export class GoalRepository implements IRepository<Goal, string> {
   constructor(
     private readonly prisma: PrismaService,
     private readonly roleRepository: RoleRepository,
   ) {}
 
-  async getAll(user?: User): Promise<Goal[]> {
+  async getAll(user?: User) {
     const isAdmin = await this.roleRepository.isAdmin(user);
     const where = user && isAdmin ? { userId: user.id } : undefined;
 
     return this.prisma.goal.findMany({ where });
   }
 
-  getById(id: string): Promise<Goal> {
+  getById(id: string) {
     return this.prisma.goal.findUnique({ where: { id } });
   }
 
-  getByUserId(userId: string): Promise<Goal[]> {
+  getByUserId(userId: string) {
     return this.prisma.goal.findMany({ where: { userId } });
   }
 
-  add(entity: AddType<Goal>): Promise<Goal> {
+  add(entity: AddType<Goal>) {
     return this.prisma.goal.create({
       data: entity,
     });
   }
 
-  update(id: string, entity: UpdateType<Goal>): Promise<Goal> {
+  update(id: string, entity: UpdateType<Goal>) {
     return this.prisma.goal.update({
       data: entity,
       where: { id },

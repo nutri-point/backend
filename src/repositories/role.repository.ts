@@ -1,35 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { Role, User } from '@prisma/client';
 import { RoleName } from 'auth/roles/role.enum';
-import { AddType, IRoleRepository, UpdateType } from 'repositories';
 import { PrismaService } from 'services';
+import { AddType, IRepository, UpdateType } from './repository.interface';
 
 @Injectable()
-export class RoleRepository implements IRoleRepository {
+export class RoleRepository implements IRepository<Role, number> {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAll(): Promise<Role[]> {
+  async getAll() {
     return this.prisma.role.findMany();
   }
 
-  getById(id: number): Promise<Role> {
+  getById(id: number) {
     return this.prisma.role.findUnique({ where: { id } });
   }
 
-  add(entity: AddType<Role>): Promise<Role> {
+  add(entity: AddType<Role>) {
     return this.prisma.role.create({
       data: entity,
     });
   }
 
-  update(id: number, entity: UpdateType<Role>): Promise<Role> {
+  update(id: number, entity: UpdateType<Role>) {
     return this.prisma.role.update({
       data: entity,
       where: { id },
     });
   }
 
-  delete(id: number): Promise<Role> {
+  delete(id: number) {
     return this.prisma.role.delete({ where: { id } });
   }
 

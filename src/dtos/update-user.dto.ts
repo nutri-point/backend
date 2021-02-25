@@ -1,6 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsPositive } from 'class-validator';
-import { IsExistingRole } from 'user/validation';
+import { IsExistingRole } from 'validation';
 
 export class UpdateUserDto {
   @Type(() => Number)

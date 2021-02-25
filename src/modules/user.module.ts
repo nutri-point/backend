@@ -1,10 +1,7 @@
 import { Module } from '@nestjs/common';
-import { UserService } from './user.service';
-import { UserController } from './user.controller';
-import {
-  IsExistingRoleConstraint,
-  IsExistingUserConstraint,
-} from './validation';
+import { UserService } from 'services';
+import { UserController } from 'controllers';
+import { IsExistingRoleConstraint, IsExistingUserConstraint } from 'validation';
 import { PrismaService } from 'services';
 
 @Module({

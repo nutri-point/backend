@@ -2,8 +2,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { User } from '@prisma/client';
-import { CreateGoalDto, GetGoalDto, UpdateGoalDto } from 'dtos';
 import { GoalRepository } from 'repositories';
+import { GetGoalDto } from 'dtos/get-goal.dto';
+import { CreateGoalDto } from 'dtos/create-goal.dto';
+import { UpdateGoalDto } from 'dtos/update-goal.dto';
 
 @Injectable()
 export class GoalService {

@@ -7,14 +7,15 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User, Prisma } from '@prisma/client';
-import { Token } from 'shared/token.model';
+import { Token } from 'utils/token.model';
 import { SecurityConfig } from 'configs/config.interface';
-import { SignUpDto } from './dto/sign-up.dto';
+import { SignUpDto } from 'dtos';
 
 // Services
-import { UserService } from 'user/user.service';
 import { ConfigService } from '@nestjs/config';
-import { CryptoService, PrismaService } from 'services';
+import { UserService } from './user.service';
+import { PrismaService } from './prisma.service';
+import { CryptoService } from './crypto.service';
 
 @Injectable()
 export class AuthService {

@@ -1,2 +1,6 @@
 export const GOAL_MIN_DESCRIPTION_LENGTH = 20;
 export const GOAL_MAX_DESCRIPTION_LENGTH = 5000;
+
+export const MEAL_MAX_NAME_LENGTH = 200;
+
+export const MIN_PASSWORD_LENGTH = 8;
