@@ -3,8 +3,8 @@ import { MEAL_MAX_NAME_LENGTH } from './constants';
 import { IsCUID } from 'validation';
 
 export class UpdateMealDto {
-  @IsString()
   @MaxLength(MEAL_MAX_NAME_LENGTH)
+  @IsString()
   name: string;
 
   @IsString()
@@ -12,6 +12,5 @@ export class UpdateMealDto {
 
   // TODO: Add validation if all meal components exist
   @IsCUID({ each: true })
-  @IsNumber({}, { each: true })
-  components: number[];
+  components: string[];
 }

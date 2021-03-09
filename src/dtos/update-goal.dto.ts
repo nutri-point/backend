@@ -5,7 +5,7 @@ import {
 } from './constants';
 
 export class UpdateGoalDto {
-  @IsString()
   @Length(GOAL_MIN_DESCRIPTION_LENGTH, GOAL_MAX_DESCRIPTION_LENGTH)
+  @IsString()
   description: string;
 }

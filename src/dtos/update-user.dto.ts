@@ -3,8 +3,8 @@ import { IsPositive } from 'class-validator';
 import { IsExistingRole } from 'validation';
 
 export class UpdateUserDto {
-  @Type(() => Number)
   @IsExistingRole()
   @IsPositive()
+  @Type(() => Number)
   roleId: number;
 }

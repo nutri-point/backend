@@ -4,38 +4,38 @@ import { MealRepository } from 'repositories';
 
 @Injectable()
 export class MealService {
-  constructor(private readonly mealRepositoy: MealRepository) {}
+  constructor(private readonly mealRepository: MealRepository) {}
 
   async findAll() {
-    const models = await this.mealRepositoy.getAll();
+    const models = await this.mealRepository.getAll();
     const dtos = models.map((model) => new GetMealDto(model));
 
     return dtos;
   }
 
   async findAllIncludeComponents() {
-    const models = await this.mealRepositoy.getAllIncludeComponents();
+    const models = await this.mealRepository.getAllIncludeComponents();
     const dtos = models.map((model) => new GetMealDto(model));
 
     return dtos;
   }
 
   async findOne(id: string) {
-    const model = await this.mealRepositoy.getById(id);
+    const model = await this.mealRepository.getById(id);
     const dto = new GetMealDto(model);
 
     return dto;
   }
 
   async create(createGoalDto: CreateMealDto) {
-    await this.mealRepositoy.add(createGoalDto);
+    await this.mealRepository.add(createGoalDto);
   }
 
   async update(id: string, updateMealDto: UpdateMealDto) {
-    await this.mealRepositoy.update(id, updateMealDto);
+    await this.mealRepository.update(id, updateMealDto);
   }
 
   async remove(id: string) {
-    await this.mealRepositoy.delete(id);
+    await this.mealRepository.delete(id);
   }
 }

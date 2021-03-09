@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Meal } from '@prisma/client';
+import { CreateMealDto, UpdateMealDto } from 'dtos';
 import { PrismaService } from 'services';
-import { AddType, IRepository, UpdateType } from './repository.interface';
+import { IRepository } from './repository.interface';
 
 @Injectable()
 export class MealRepository implements IRepository<Meal, string> {
@@ -22,15 +23,24 @@ export class MealRepository implements IRepository<Meal, string> {
     });
   }
 
-  add(entity: AddType<Meal>) {
+  add(dto: CreateMealDto) {
     return this.prisma.meal.create({
-      data: entity,
+      data: dto,
     });
   }
 
-  update(id: string, entity: UpdateType<Meal>) {
+  // TODO: check if meal components are updated
+  update(id: string, dto: UpdateMealDto) {
+    const componentsToConnect = dto.components.map((mealComponentId) => ({
+      id: mealComponentId,
+    }));
+
     return this.prisma.meal.update({
-      data: entity,
+      data: {
+        name: dto.name,
+        recipe: dto.recipe,
+        components: { connect: componentsToConnect },
+      },
       where: { id },
     });
   }

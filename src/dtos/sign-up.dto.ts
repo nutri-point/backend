@@ -12,12 +12,12 @@ import {
 } from 'class-validator';
 
 export class SignUpDto {
-  @IsNotEmpty()
   @IsAlpha()
+  @IsNotEmpty()
   firstName: string;
 
-  @IsNotEmpty()
   @IsAlpha()
+  @IsNotEmpty()
   lastName: string;
 
   @IsEmail()
@@ -28,13 +28,13 @@ export class SignUpDto {
   @MinLength(MIN_PASSWORD_LENGTH)
   password: string;
 
-  @Type(() => Number)
   @IsInt()
   @IsPositive()
+  @Type(() => Number)
   height: number;
 
-  @Type(() => Number)
   @IsPositive()
+  @Type(() => Number)
   weight: number;
 
   @IsDateString()
