@@ -1,41 +1,41 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMealDto, GetMealDto, UpdateMealDto } from 'dtos';
-import { MealRepository } from 'repositories';
+import { UnitOfWork } from 'repositories';
 
 @Injectable()
 export class MealService {
-  constructor(private readonly mealRepository: MealRepository) {}
+  constructor(private readonly uow: UnitOfWork) {}
 
   async findAll() {
-    const models = await this.mealRepository.getAll();
+    const models = await this.uow.mealRepository.getAll();
     const dtos = models.map((model) => new GetMealDto(model));
 
     return dtos;
   }
 
   async findAllIncludeComponents() {
-    const models = await this.mealRepository.getAllIncludeComponents();
+    const models = await this.uow.mealRepository.getAllIncludeComponents();
     const dtos = models.map((model) => new GetMealDto(model));
 
     return dtos;
   }
 
   async findOne(id: string) {
-    const model = await this.mealRepository.getById(id);
+    const model = await this.uow.mealRepository.getById(id);
     const dto = new GetMealDto(model);
 
     return dto;
   }
 
   async create(createGoalDto: CreateMealDto) {
-    await this.mealRepository.add(createGoalDto);
+    await this.uow.mealRepository.add(createGoalDto);
   }
 
   async update(id: string, updateMealDto: UpdateMealDto) {
-    await this.mealRepository.update(id, updateMealDto);
+    await this.uow.mealRepository.update(id, updateMealDto);
   }
 
   async remove(id: string) {
-    await this.mealRepository.delete(id);
+    await this.uow.mealRepository.delete(id);
   }
 }

@@ -1,10 +1,8 @@
-import { Injectable } from '@nestjs/common';
 import { Role, User } from '@prisma/client';
 import { RoleName } from 'auth/roles/role.enum';
 import { PrismaService } from 'services';
 import { AddType, IRepository, UpdateType } from './repository.interface';
 
-@Injectable()
 export class RoleRepository implements IRepository<Role, number> {
   constructor(private readonly prisma: PrismaService) {}
 
@@ -34,6 +32,8 @@ export class RoleRepository implements IRepository<Role, number> {
   }
 
   async isAdmin(user: User) {
+    if (!user) return false;
+
     const role = await this.prisma.role.findUnique({
       where: { id: user.roleId },
     });

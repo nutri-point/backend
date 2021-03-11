@@ -1,3 +1,4 @@
+export * from './get-user.dto';
 export * from './get-goal.dto';
 export * from './get-meal.dto';
 export * from './get-meal-component.dto';

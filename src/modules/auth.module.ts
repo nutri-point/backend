@@ -11,6 +11,7 @@ import { AuthController } from 'controllers';
 import { JwtStrategy } from 'auth/strategies/jwt.strategy';
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 import { RoleGuard } from 'auth/roles/role.guard';
+import { UnitOfWork } from 'repositories';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { RoleGuard } from 'auth/roles/role.guard';
     RoleGuard,
     CryptoService,
     PrismaService,
+    UnitOfWork,
   ],
   exports: [JwtAuthGuard, RoleGuard],
 })

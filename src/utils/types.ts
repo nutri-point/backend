@@ -9,3 +9,7 @@ export type PrismaSelectType<Type> = Partial<OptionsFlags<Type>>;
 export type MealWithComponents = Prisma.MealGetPayload<{
   include: { components: true };
 }>;
+
+export type UserWithRole = Prisma.UserGetPayload<{
+  include: { role: true };
+}>;

@@ -1,48 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
+import { Request } from 'express';
 import { User } from '@prisma/client';
-import { PrismaService } from 'services';
-import { PrismaSelectType } from 'utils/types';
 
-import { UpdateUserDto } from 'dtos';
-
-const select: PrismaSelectType<User> = {
-  id: true,
-  email: true,
-  firstName: true,
-  lastName: true,
-};
+import { UnitOfWork } from 'repositories';
+import { GetUserDto, UpdateUserDto } from 'dtos';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly uow: UnitOfWork,
+    @Inject(REQUEST) private readonly request: Request,
+  ) {}
 
-  async findAll(): Promise<PrismaSelectType<User>[]> {
-    return this.prisma.user.findMany({ select });
+  async findAll() {
+    const user = this.request.user as User;
+    const models = await this.uow.userRepository.getAll(user);
+    const dtos = models.map((model) => new GetUserDto(model));
+
+    return dtos;
   }
 
   async findOne(id: string) {
-    return this.prisma.user.findUnique({ where: { id } });
+    const model = await this.uow.userRepository.getById(id);
+    const dto = new GetUserDto(model);
+
+    return dto;
   }
 
   async findByEmail(email: string) {
-    return this.prisma.user.findUnique({ where: { email } });
+    const model = await this.uow.userRepository.getByEmail(email);
+    const dto = new GetUserDto(model);
+
+    return dto;
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    return this.prisma.user.update({
-      data: updateUserDto,
-      where: { id },
-    });
+    await this.uow.userRepository.update(id, updateUserDto);
   }
 
   async updateRefreshTokenHash(id: string, refreshTokenHash: string) {
-    return this.prisma.user.update({
-      data: { refreshTokenHash },
-      where: { id },
-    });
+    await this.uow.userRepository.update(id, { refreshTokenHash });
   }
 
   async remove(id: string) {
-    return this.prisma.user.delete({ where: { id } });
+    await this.uow.userRepository.delete(id);
   }
 }

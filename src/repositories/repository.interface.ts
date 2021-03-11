@@ -2,6 +2,11 @@ import { User } from '@prisma/client';
 
 export type AddType<T> = Omit<T, 'id' | 'createdAt' | 'updatedAt'>;
 
+export type UserAddType<T> = Omit<
+  AddType<T>,
+  'isActive' | 'refreshTokenHash' | 'roleId'
+>;
+
 export type UpdateType<T> = Partial<AddType<T>>;
 
 export interface IRepository<TEntity, TKey> {

@@ -1,17 +1,11 @@
 import { Module } from '@nestjs/common';
 import { GoalController } from 'controllers';
-import { GoalRepository, RoleRepository } from 'repositories';
+import { UnitOfWork } from 'repositories';
 import { GoalService, PrismaService } from 'services';
 import { IsExistingUserConstraint } from 'validation';
 
 @Module({
   controllers: [GoalController],
-  providers: [
-    GoalService,
-    PrismaService,
-    RoleRepository,
-    GoalRepository,
-    IsExistingUserConstraint,
-  ],
+  providers: [GoalService, PrismaService, UnitOfWork, IsExistingUserConstraint],
 })
 export class GoalModule {}

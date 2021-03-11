@@ -1,10 +1,8 @@
-import { Injectable } from '@nestjs/common';
 import { Meal } from '@prisma/client';
 import { CreateMealDto, UpdateMealDto } from 'dtos';
 import { PrismaService } from 'services';
 import { IRepository } from './repository.interface';
 
-@Injectable()
 export class MealRepository implements IRepository<Meal, string> {
   constructor(private readonly prisma: PrismaService) {}
 

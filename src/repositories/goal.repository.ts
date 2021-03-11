@@ -1,10 +1,8 @@
-import { Injectable } from '@nestjs/common';
 import { Goal, User } from '@prisma/client';
 import { PrismaService } from 'services';
 import { AddType, IRepository, UpdateType } from './repository.interface';
 import { RoleRepository } from './role.repository';
 
-@Injectable()
 export class GoalRepository implements IRepository<Goal, string> {
   constructor(
     private readonly prisma: PrismaService,
@@ -13,7 +11,7 @@ export class GoalRepository implements IRepository<Goal, string> {
 
   async getAll(user?: User) {
     const isAdmin = await this.roleRepository.isAdmin(user);
-    const where = user && isAdmin ? { userId: user.id } : undefined;
+    const where = isAdmin ? undefined : { userId: user.id };
 
     return this.prisma.goal.findMany({ where });
   }

@@ -26,6 +26,7 @@ model User {
   refreshTokenHash String?
   goals            Goal[]
   results          Result[]
+  // TODO: set role mandatory field
   roleId           Int?
   role             Role?    @relation(fields: [roleId], references: [id])
 }

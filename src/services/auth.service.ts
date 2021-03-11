@@ -14,33 +14,31 @@ import { SignUpDto } from 'dtos';
 // Services
 import { ConfigService } from '@nestjs/config';
 import { UserService } from './user.service';
-import { PrismaService } from './prisma.service';
 import { CryptoService } from './crypto.service';
+import { UnitOfWork } from 'repositories';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly prisma: PrismaService,
     private readonly cryptoService: CryptoService,
     private readonly configService: ConfigService,
     private readonly userService: UserService,
+    private readonly uow: UnitOfWork,
   ) {}
 
   async createUser(payload: SignUpDto): Promise<Token> {
     const hashedPassword = await this.cryptoService.hash(payload.password);
 
     try {
-      const user = await this.prisma.user.create({
-        data: {
-          firstName: payload.firstName,
-          lastName: payload.lastName,
-          email: payload.email,
-          height: payload.height,
-          weight: payload.weight,
-          dateOfBirth: payload.dateOfBirth,
-          passwordHash: hashedPassword,
-        },
+      const user = await this.uow.userRepository.add({
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        email: payload.email,
+        height: payload.height,
+        weight: payload.weight,
+        dateOfBirth: payload.dateOfBirth,
+        passwordHash: hashedPassword,
       });
 
       const token = await this.generateToken({
@@ -66,7 +64,7 @@ export class AuthService {
   }
 
   async login(email: string, password: string): Promise<Token> {
-    const user = await this.prisma.user.findUnique({ where: { email } });
+    const user = await this.uow.userRepository.getByEmail(email);
 
     if (!user) {
       throw new NotFoundException(`No user found for email: ${email}`);
@@ -91,12 +89,12 @@ export class AuthService {
   }
 
   validateUser(userId: string): Promise<User> {
-    return this.prisma.user.findUnique({ where: { id: userId } });
+    return this.uow.userRepository.getById(userId);
   }
 
   getUserFromToken(token: string): Promise<User> {
     const id = this.jwtService.decode(token)['userId'];
-    return this.prisma.user.findUnique({ where: { id } });
+    return this.uow.userRepository.getById(id);
   }
 
   async generateToken(payload: { userId: string }) {
