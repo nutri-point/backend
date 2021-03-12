@@ -7,9 +7,11 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateMealComponentDto, UpdateMealComponentDto } from 'dtos';
 import { MealComponentService } from 'services';
 
+@ApiTags('MealComponent')
 @Controller('mealComponent')
 export class MealComponentController {
   constructor(private readonly mealComponentService: MealComponentService) {}
