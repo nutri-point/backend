@@ -3,8 +3,9 @@ import { IRepository } from './repository.interface';
 
 // Repositories
 import { GoalRepository } from './goal.repository';
-import { MealComponentRepository } from './meal-component.repository';
 import { MealRepository } from './meal.repository';
+import { MealComponentRepository } from './meal-component.repository';
+import { MenuRepository } from './menu.repository';
 import { RoleRepository } from './role.repository';
 import { UserRepository } from './user.repository';
 
@@ -17,6 +18,7 @@ export class UnitOfWork {
   public goalRepository: GoalRepository;
   public mealRepository: MealRepository;
   public mealComponentRepository: MealComponentRepository;
+  public menuRepository: MenuRepository;
 
   constructor(prisma: PrismaService) {
     this.roleRepository = new RoleRepository(prisma);
@@ -26,6 +28,7 @@ export class UnitOfWork {
 
     this.mealRepository = new MealRepository(prisma);
     this.mealComponentRepository = new MealComponentRepository(prisma);
+    this.menuRepository = new MenuRepository(prisma);
   }
 
   public getRepository(repositoryName: string): IRepository<any, any> {
@@ -42,6 +45,8 @@ export class UnitOfWork {
         return this.mealRepository;
       case 'mealcomponent':
         return this.mealComponentRepository;
+      case 'menu':
+        return this.menuRepository;
       default:
         throw new Error(
           `Repository with name ${repositoryName} does not exist.`,
