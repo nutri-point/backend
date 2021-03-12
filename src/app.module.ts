@@ -1,7 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import config from 'configs/config';
-import { AuthModule, UserModule, GoalModule, MealModule } from 'modules';
+import {
+  AuthModule,
+  UserModule,
+  GoalModule,
+  MealModule,
+  MealComponentModule,
+} from 'modules';
 import { MenuModule } from 'modules/menu.module';
 
 @Module({
@@ -11,6 +17,7 @@ import { MenuModule } from 'modules/menu.module';
     AuthModule,
     GoalModule,
     MealModule,
+    MealComponentModule,
     MenuModule,
   ],
   providers: [],
