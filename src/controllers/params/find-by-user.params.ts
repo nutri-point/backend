@@ -1,8 +1,7 @@
-import { IsCUID } from 'validation';
-import { IsExistingUser } from 'validation';
+import { IsCUID, IsExistingEntity } from 'validation';
 
 export class FindByUserParams {
-  @IsExistingUser()
+  @IsExistingEntity('user')
   @IsCUID()
   id: string;
 }

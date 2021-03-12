@@ -1,9 +1,8 @@
-import { IsCUID } from 'validation';
-import { IsExistingUser } from 'validation';
+import { IsCUID, IsExistingEntity } from 'validation';
 import { UpdateGoalDto } from './update-goal.dto';
 
 export class CreateGoalDto extends UpdateGoalDto {
-  @IsExistingUser()
+  @IsExistingEntity('user')
   @IsCUID()
   userId: string;
 }

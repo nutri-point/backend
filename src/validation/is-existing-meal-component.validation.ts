@@ -8,7 +8,6 @@ import {
 } from 'class-validator';
 import { PrismaService } from 'services';
 
-// TODO: Write generic IsExistingEntity validator
 @ValidatorConstraint({ async: true })
 @Injectable()
 export class IsExistingMealComponentConstraint

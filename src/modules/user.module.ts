@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UserService } from 'services';
 import { UserController } from 'controllers';
-import { IsExistingRoleConstraint, IsExistingUserConstraint } from 'validation';
+import { IsExistingEntityConstraint } from 'validation';
 import { PrismaService } from 'services';
 import { UnitOfWork } from 'repositories';
 
@@ -10,8 +10,7 @@ import { UnitOfWork } from 'repositories';
   providers: [
     UserService,
     PrismaService,
-    IsExistingUserConstraint,
-    IsExistingRoleConstraint,
+    IsExistingEntityConstraint,
     UnitOfWork,
   ],
   exports: [UserService],

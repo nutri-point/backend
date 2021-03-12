@@ -7,6 +7,7 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { UnitOfWork } from 'repositories';
+import { capitalizeString } from 'utils/helpers';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
@@ -27,8 +28,8 @@ export class IsExistingEntityConstraint
   }
 
   defaultMessage({ value, constraints }: ValidationArguments) {
-    const repoName = constraints[0];
-    return `Entity of type ${repoName} with ID=${value} does not exist.`;
+    const repoName = capitalizeString(constraints[0]);
+    return `Entity of type '${repoName}' with ID=${value} does not exist.`;
   }
 }
 

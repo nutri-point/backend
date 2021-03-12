@@ -1,3 +1,2 @@
 export * from './is-cuid.validation';
-export * from './is-existing-user.validation';
-export * from './is-existing-role.validation';
+export * from './is-existing-entity.validation';

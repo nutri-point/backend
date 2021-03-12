@@ -13,3 +13,7 @@ export type MealWithComponents = Prisma.MealGetPayload<{
 export type UserWithRole = Prisma.UserGetPayload<{
   include: { role: true };
 }>;
+
+export type MenuWithMeals = Prisma.MenuGetPayload<{
+  include: { meals: true };
+}>;

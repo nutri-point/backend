@@ -1,25 +1,6 @@
-import { IsPositive, IsString, MaxLength } from 'class-validator';
-import { MEAL_COMPONENT_MAX_NAME_LENGTH } from './constants';
-import { Type } from 'class-transformer';
+import { PartialType } from '@nestjs/swagger';
+import { CreateMealComponentDto } from './create-meal-component.dto';
 
-export class UpdateMealComponentDto {
-  @MaxLength(MEAL_COMPONENT_MAX_NAME_LENGTH)
-  @IsString()
-  name: string;
-
-  @IsPositive()
-  @Type(() => Number)
-  calories: number;
-
-  @IsPositive()
-  @Type(() => Number)
-  proteins: number;
-
-  @IsPositive()
-  @Type(() => Number)
-  carbohydrates: number;
-
-  @IsPositive()
-  @Type(() => Number)
-  fat: number;
-}
+export class UpdateMealComponentDto extends PartialType(
+  CreateMealComponentDto,
+) {}
