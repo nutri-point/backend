@@ -3,6 +3,7 @@ import { IRepository } from './repository.interface';
 
 // Repositories
 import { GoalRepository } from './goal.repository';
+import { ResultRepository } from './result.repository';
 import { MealRepository } from './meal.repository';
 import { MealComponentRepository } from './meal-component.repository';
 import { MenuRepository } from './menu.repository';
@@ -16,6 +17,7 @@ export class UnitOfWork {
   public roleRepository: RoleRepository;
   public userRepository: UserRepository;
   public goalRepository: GoalRepository;
+  public resultRepository: ResultRepository;
   public mealRepository: MealRepository;
   public mealComponentRepository: MealComponentRepository;
   public menuRepository: MenuRepository;
@@ -25,6 +27,7 @@ export class UnitOfWork {
 
     this.userRepository = new UserRepository(prisma, this.roleRepository);
     this.goalRepository = new GoalRepository(prisma, this.roleRepository);
+    this.resultRepository = new ResultRepository(prisma, this.roleRepository);
 
     this.mealRepository = new MealRepository(prisma);
     this.mealComponentRepository = new MealComponentRepository(prisma);
@@ -41,6 +44,8 @@ export class UnitOfWork {
         return this.userRepository;
       case 'goal':
         return this.goalRepository;
+      case 'result':
+        return this.resultRepository;
       case 'meal':
         return this.mealRepository;
       case 'mealcomponent':
