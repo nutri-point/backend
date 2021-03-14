@@ -39,7 +39,9 @@ export class GoalService {
   }
 
   async update(id: string, updateGoalDto: UpdateGoalDto) {
-    await this.uow.goalRepository.update(id, updateGoalDto);
+    await this.uow.goalRepository.update(id, {
+      description: updateGoalDto.description,
+    });
   }
 
   async remove(id: string) {

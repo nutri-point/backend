@@ -32,7 +32,10 @@ export class MenuService {
   }
 
   async update(id: string, updateMenuDto: UpdateMenuDto) {
-    await this.uow.menuRepository.update(id, updateMenuDto);
+    await this.uow.menuRepository.update(id, {
+      weekStartDate: updateMenuDto.weekStartDate,
+      meals: updateMenuDto.meals,
+    });
   }
 
   async remove(id: string) {

@@ -29,7 +29,13 @@ export class MealComponentService {
   }
 
   async update(id: string, updateMealDto: UpdateMealComponentDto) {
-    await this.uow.mealComponentRepository.update(id, updateMealDto);
+    await this.uow.mealComponentRepository.update(id, {
+      name: updateMealDto.name,
+      calories: updateMealDto.calories,
+      proteins: updateMealDto.proteins,
+      carbohydrates: updateMealDto.carbohydrates,
+      fat: updateMealDto.fat,
+    });
   }
 
   async remove(id: string) {

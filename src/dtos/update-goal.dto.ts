@@ -1,11 +1,4 @@
-import { IsString, Length } from 'class-validator';
-import {
-  GOAL_MAX_DESCRIPTION_LENGTH,
-  GOAL_MIN_DESCRIPTION_LENGTH,
-} from './constants';
+import { PartialType } from '@nestjs/swagger';
+import { CreateGoalDto } from './create-goal.dto';
 
-export class UpdateGoalDto {
-  @Length(GOAL_MIN_DESCRIPTION_LENGTH, GOAL_MAX_DESCRIPTION_LENGTH)
-  @IsString()
-  description: string;
-}
+export class UpdateGoalDto extends PartialType(CreateGoalDto) {}

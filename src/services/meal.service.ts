@@ -32,7 +32,11 @@ export class MealService {
   }
 
   async update(id: string, updateMealDto: UpdateMealDto) {
-    await this.uow.mealRepository.update(id, updateMealDto);
+    await this.uow.mealRepository.update(id, {
+      name: updateMealDto.name,
+      recipe: updateMealDto.recipe,
+      components: updateMealDto.components,
+    });
   }
 
   async remove(id: string) {

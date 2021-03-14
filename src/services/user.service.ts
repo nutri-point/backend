@@ -36,7 +36,9 @@ export class UserService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    await this.uow.userRepository.update(id, updateUserDto);
+    await this.uow.userRepository.update(id, {
+      roleId: updateUserDto.roleId,
+    });
   }
 
   async updateRefreshTokenHash(id: string, refreshTokenHash: string) {

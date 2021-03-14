@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsPositive, IsString, MaxLength } from 'class-validator';
+import { IsInt, IsPositive, IsString, MaxLength } from 'class-validator';
 import { MEAL_COMPONENT_MAX_NAME_LENGTH } from './constants';
 
 export class CreateMealComponentDto {
@@ -7,18 +7,22 @@ export class CreateMealComponentDto {
   @IsString()
   name: string;
 
+  @IsInt()
   @IsPositive()
   @Type(() => Number)
   calories: number;
 
+  @IsInt()
   @IsPositive()
   @Type(() => Number)
   proteins: number;
 
+  @IsInt()
   @IsPositive()
   @Type(() => Number)
   carbohydrates: number;
 
+  @IsInt()
   @IsPositive()
   @Type(() => Number)
   fat: number;

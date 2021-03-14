@@ -1,8 +1,16 @@
+import { IsString, Length } from 'class-validator';
 import { IsCUID, IsExistingEntity } from 'validation';
-import { UpdateGoalDto } from './update-goal.dto';
+import {
+  GOAL_MAX_DESCRIPTION_LENGTH,
+  GOAL_MIN_DESCRIPTION_LENGTH,
+} from './constants';
 
-export class CreateGoalDto extends UpdateGoalDto {
+export class CreateGoalDto {
   @IsExistingEntity('user')
   @IsCUID()
   userId: string;
+
+  @Length(GOAL_MIN_DESCRIPTION_LENGTH, GOAL_MAX_DESCRIPTION_LENGTH)
+  @IsString()
+  description: string;
 }
