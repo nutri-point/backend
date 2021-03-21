@@ -8,6 +8,7 @@ import {
   CreateShoppingListWithItemsDto,
   GetShoppingListDto,
   UpdateShoppingListDto,
+  UpdateShoppingListWithItemsDto,
 } from 'dtos';
 
 @Injectable()
@@ -88,6 +89,15 @@ export class ShoppingListService {
   async update(id: string, updateShoppingListDto: UpdateShoppingListDto) {
     await this.uow.shoppingListRepository.update(id, {
       items: updateShoppingListDto.items,
+    });
+  }
+
+  async updateWithItems(
+    id: string,
+    updateShoppingListWithItemsDto: UpdateShoppingListWithItemsDto,
+  ) {
+    await this.uow.shoppingListRepository.updateWithItems(id, {
+      items: updateShoppingListWithItemsDto.items,
     });
   }
 

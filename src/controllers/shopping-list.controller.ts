@@ -15,9 +15,8 @@ import { RoleRank } from 'auth/roles/role.enum';
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 import { ShoppingListService } from 'services';
 import {
-  CreateShoppingListDto,
   CreateShoppingListWithItemsDto,
-  UpdateShoppingListDto,
+  UpdateShoppingListWithItemsDto,
 } from 'dtos';
 import { FindByUserParams } from './params/find-by-user.params';
 
@@ -29,13 +28,7 @@ export class ShoppingListController {
 
   @Role(RoleRank.Admin)
   @Post()
-  create(@Body() createShoppingListDto: CreateShoppingListDto) {
-    return this.shoppingListService.create(createShoppingListDto);
-  }
-
-  @Role(RoleRank.Admin)
-  @Post()
-  createWithItems(
+  create(
     @Body() createShoppingListWithItemsDto: CreateShoppingListWithItemsDto,
   ) {
     return this.shoppingListService.createWithItems(
@@ -88,9 +81,12 @@ export class ShoppingListController {
   @Put(':id')
   update(
     @Param('id') id: string,
-    @Body() updateShoppingListDto: UpdateShoppingListDto,
+    @Body() updateShoppingListWithItemsDto: UpdateShoppingListWithItemsDto,
   ) {
-    return this.shoppingListService.update(id, updateShoppingListDto);
+    return this.shoppingListService.updateWithItems(
+      id,
+      updateShoppingListWithItemsDto,
+    );
   }
 
   @Role(RoleRank.Admin)

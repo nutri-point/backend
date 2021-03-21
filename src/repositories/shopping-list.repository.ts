@@ -3,6 +3,7 @@ import {
   CreateShoppingListDto,
   CreateShoppingListWithItemsDto,
   UpdateShoppingListDto,
+  UpdateShoppingListWithItemsDto,
 } from 'dtos';
 import { PrismaService } from 'services';
 import { IRepository } from './repository.interface';
@@ -74,6 +75,19 @@ export class ShoppingListRepository
     return this.prisma.shoppingList.update({
       data: {
         items: { connect: itemsToConnect },
+      },
+      where: { id },
+    });
+  }
+
+  updateWithItems(id: string, dto: UpdateShoppingListWithItemsDto) {
+    const itemsToCreate = dto.items.map((itemDto) => ({
+      name: itemDto.name,
+    }));
+
+    return this.prisma.shoppingList.update({
+      data: {
+        items: { deleteMany: {}, create: itemsToCreate },
       },
       where: { id },
     });

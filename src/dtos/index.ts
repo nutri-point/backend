@@ -17,6 +17,8 @@ export * from './update-user.dto';
 export * from './update-goal.dto';
 export * from './update-result.dto';
 export * from './update-shopping-list.dto';
+export * from './update-shopping-list-with-items.dto';
+export * from './update-shopping-list-item.dto';
 export * from './update-meal.dto';
 export * from './update-meal-component.dto';
 export * from './update-menu.dto';
