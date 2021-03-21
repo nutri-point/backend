@@ -11,23 +11,24 @@ generator client {
 }
 
 model User {
-  id               String   @id @default(cuid()) @db.VarChar(25)
-  email            String   @unique
+  id               String         @id @default(cuid()) @db.VarChar(25)
+  email            String         @unique
   passwordHash     String
-  firstName        String   @db.VarChar(200)
-  lastName         String   @db.VarChar(200)
+  firstName        String         @db.VarChar(200)
+  lastName         String         @db.VarChar(200)
   height           Int
   weight           Float
   dateOfBirth      DateTime
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  isActive         Boolean  @default(true)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  isActive         Boolean        @default(true)
   refreshTokenHash String?
   goals            Goal[]
   results          Result[]
+  shoppingLists    ShoppingList[]
   // TODO: set role mandatory field
   roleId           Int?
-  role             Role?    @relation(fields: [roleId], references: [id])
+  role             Role?          @relation(fields: [roleId], references: [id])
 }
 
 model Goal {
@@ -36,6 +37,7 @@ model Goal {
   user        User     @relation(fields: [userId], references: [id])
   description String
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Menu {
@@ -69,21 +71,28 @@ model Result {
   date           DateTime @default(now())
   weight         Float
   bodyFatPercent Float
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model ShoppingList {
-  id    String             @id @default(cuid()) @db.VarChar(25)
-  items ShoppingListItem[]
+  id        String             @id @default(cuid()) @db.VarChar(25)
+  items     ShoppingListItem[]
+  userId    String             @db.VarChar(25)
+  user      User               @relation(fields: [userId], references: [id])
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
 }
 
 model ShoppingListItem {
   id            String         @id @default(cuid()) @db.VarChar(25)
+  name          String         @db.VarChar(200)
   shoppingLists ShoppingList[]
 }
 
 model Role {
   id   Int    @id @default(autoincrement())
   name String @db.VarChar(50)
-  User User[]
+  user User[]
   rank Int
 }
