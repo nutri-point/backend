@@ -15,7 +15,16 @@ export class UserService {
 
   async findAll() {
     const user = this.request.user as User;
-    const models = await this.uow.userRepository.getAll(user);
+    if (!user) return [];
+
+    const isAdmin = await this.uow.roleRepository.isAdmin(user);
+
+    let models: User[];
+    if (isAdmin) {
+      models = await this.uow.userRepository.getAll();
+    } else {
+      models = await this.uow.userRepository.getAll(user.id);
+    }
     const dtos = models.map((model) => new GetUserDto(model));
 
     return dtos;

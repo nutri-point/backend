@@ -1,18 +1,12 @@
 import { User } from '@prisma/client';
 import { PrismaService } from 'services';
 import { IRepository, UpdateType, UserAddType } from './repository.interface';
-import { RoleRepository } from './role.repository';
 
 export class UserRepository implements IRepository<User, string> {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly roleRepository: RoleRepository,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
-  async getAll(user?: User) {
-    const isAdmin = user && (await this.roleRepository.isAdmin(user));
-    const where = isAdmin ? undefined : { id: user.id };
-
+  async getAll(userId?: string) {
+    const where = userId ? undefined : { id: userId };
     return this.prisma.user.findMany({ where });
   }
 

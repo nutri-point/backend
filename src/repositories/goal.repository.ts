@@ -1,18 +1,13 @@
-import { Goal, User } from '@prisma/client';
+import { Goal } from '@prisma/client';
+import { CreateGoalDto, UpdateGoalDto } from 'dtos';
 import { PrismaService } from 'services';
-import { AddType, IRepository, UpdateType } from './repository.interface';
-import { RoleRepository } from './role.repository';
+import { IRepository } from './repository.interface';
 
 export class GoalRepository implements IRepository<Goal, string> {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly roleRepository: RoleRepository,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
-  async getAll(user?: User) {
-    const isAdmin = await this.roleRepository.isAdmin(user);
-    const where = isAdmin ? undefined : { userId: user.id };
-
+  getAll(userId?: string) {
+    const where = userId ? undefined : { userId };
     return this.prisma.goal.findMany({ where });
   }
 
@@ -20,19 +15,35 @@ export class GoalRepository implements IRepository<Goal, string> {
     return this.prisma.goal.findUnique({ where: { id } });
   }
 
+  getLatest(userId?: string) {
+    const where = userId ? undefined : { userId };
+
+    return this.prisma.goal.findFirst({
+      where,
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
   getByUserId(userId: string) {
     return this.prisma.goal.findMany({ where: { userId } });
   }
 
-  add(entity: AddType<Goal>) {
-    return this.prisma.goal.create({
-      data: entity,
+  getLatestByUserId(userId: string) {
+    return this.prisma.goal.findFirst({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
     });
   }
 
-  update(id: string, entity: UpdateType<Goal>) {
+  add(dto: CreateGoalDto) {
+    return this.prisma.goal.create({
+      data: dto,
+    });
+  }
+
+  update(id: string, dto: UpdateGoalDto) {
     return this.prisma.goal.update({
-      data: entity,
+      data: dto,
       where: { id },
     });
   }

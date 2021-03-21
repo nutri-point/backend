@@ -6,11 +6,11 @@ import { IRepository } from './repository.interface';
 export class MealRepository implements IRepository<Meal, string> {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAll() {
+  getAll() {
     return this.prisma.meal.findMany();
   }
 
-  async getAllIncludeComponents() {
+  getAllIncludeComponents() {
     return this.prisma.meal.findMany({ include: { components: true } });
   }
 
@@ -22,8 +22,15 @@ export class MealRepository implements IRepository<Meal, string> {
   }
 
   add(dto: CreateMealDto) {
+    const componentsToConnect = dto.components.map((mealComponentId) => ({
+      id: mealComponentId,
+    }));
+
     return this.prisma.meal.create({
-      data: dto,
+      data: {
+        ...dto,
+        components: { connect: componentsToConnect },
+      },
     });
   }
 

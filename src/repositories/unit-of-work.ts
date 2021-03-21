@@ -4,6 +4,7 @@ import { IRepository } from './repository.interface';
 // Repositories
 import { GoalRepository } from './goal.repository';
 import { ResultRepository } from './result.repository';
+import { ShoppingListRepository } from './shopping-list.repository';
 import { MealRepository } from './meal.repository';
 import { MealComponentRepository } from './meal-component.repository';
 import { MenuRepository } from './menu.repository';
@@ -18,17 +19,17 @@ export class UnitOfWork {
   public userRepository: UserRepository;
   public goalRepository: GoalRepository;
   public resultRepository: ResultRepository;
+  public shoppingListRepository: ShoppingListRepository;
   public mealRepository: MealRepository;
   public mealComponentRepository: MealComponentRepository;
   public menuRepository: MenuRepository;
 
   constructor(prisma: PrismaService) {
     this.roleRepository = new RoleRepository(prisma);
-
-    this.userRepository = new UserRepository(prisma, this.roleRepository);
-    this.goalRepository = new GoalRepository(prisma, this.roleRepository);
-    this.resultRepository = new ResultRepository(prisma, this.roleRepository);
-
+    this.userRepository = new UserRepository(prisma);
+    this.goalRepository = new GoalRepository(prisma);
+    this.resultRepository = new ResultRepository(prisma);
+    this.shoppingListRepository = new ShoppingListRepository(prisma);
     this.mealRepository = new MealRepository(prisma);
     this.mealComponentRepository = new MealComponentRepository(prisma);
     this.menuRepository = new MenuRepository(prisma);
@@ -52,6 +53,8 @@ export class UnitOfWork {
         return this.mealComponentRepository;
       case 'menu':
         return this.menuRepository;
+      case 'shoppinglist':
+        return this.shoppingListRepository;
       default:
         throw new Error(
           `Repository with name ${repositoryName} does not exist.`,

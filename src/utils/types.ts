@@ -17,3 +17,7 @@ export type UserWithRole = Prisma.UserGetPayload<{
 export type MenuWithMeals = Prisma.MenuGetPayload<{
   include: { meals: true };
 }>;
+
+export type ShoppingListWithItems = Prisma.ShoppingListGetPayload<{
+  include: { items: true };
+}>;

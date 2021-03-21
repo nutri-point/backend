@@ -42,6 +42,12 @@ export class ResultController {
     return this.resultService.findOne(id);
   }
 
+  @Role(RoleRank.User)
+  @Get('/latest')
+  findLatest() {
+    return this.resultService.findLatest();
+  }
+
   @ApiParam({
     name: 'id',
     type: 'string',
@@ -50,6 +56,16 @@ export class ResultController {
   @Get('/user/:id')
   findByUserId(@Param() params: FindByUserParams) {
     return this.resultService.findByUserId(params.id);
+  }
+
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+  })
+  @Role(RoleRank.Admin)
+  @Get('/user/:id/latest')
+  findLatestByUserId(@Param() params: FindByUserParams) {
+    return this.resultService.findLatestByUserId(params.id);
   }
 
   @Role(RoleRank.Admin)

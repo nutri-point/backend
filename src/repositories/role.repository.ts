@@ -6,7 +6,7 @@ import { AddType, IRepository, UpdateType } from './repository.interface';
 export class RoleRepository implements IRepository<Role, number> {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAll() {
+  getAll() {
     return this.prisma.role.findMany();
   }
 

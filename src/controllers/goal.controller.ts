@@ -42,6 +42,12 @@ export class GoalController {
     return this.goalService.findOne(id);
   }
 
+  @Role(RoleRank.User)
+  @Get('/latest')
+  findLatest() {
+    return this.goalService.findLatest();
+  }
+
   @ApiParam({
     name: 'id',
     type: 'string',
@@ -50,6 +56,16 @@ export class GoalController {
   @Get('/user/:id')
   findByUserId(@Param() params: FindByUserParams) {
     return this.goalService.findByUserId(params.id);
+  }
+
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+  })
+  @Role(RoleRank.Admin)
+  @Get('/user/:id/latest')
+  findLatestByUserId(@Param() params: FindByUserParams) {
+    return this.goalService.findLatestByUserId(params.id);
   }
 
   @Role(RoleRank.Admin)

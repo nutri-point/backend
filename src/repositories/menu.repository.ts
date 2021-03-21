@@ -6,11 +6,11 @@ import { IRepository } from './repository.interface';
 export class MenuRepository implements IRepository<Menu, string> {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAll() {
+  getAll() {
     return this.prisma.menu.findMany();
   }
 
-  async getAllIncludeComponents() {
+  getAllIncludeComponents() {
     return this.prisma.menu.findMany({ include: { meals: true } });
   }
 
@@ -22,8 +22,15 @@ export class MenuRepository implements IRepository<Menu, string> {
   }
 
   add(dto: CreateMenuDto) {
+    const mealsToConnect = dto.meals.map((mealId) => ({
+      id: mealId,
+    }));
+
     return this.prisma.menu.create({
-      data: dto,
+      data: {
+        weekStartDate: dto.weekStartDate,
+        meals: { connect: mealsToConnect },
+      },
     });
   }
 

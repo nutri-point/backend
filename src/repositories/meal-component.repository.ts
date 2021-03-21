@@ -7,7 +7,7 @@ export class MealComponentRepository
   implements IRepository<MealComponent, string> {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAll() {
+  getAll() {
     return this.prisma.mealComponent.findMany();
   }
 

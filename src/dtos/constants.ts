@@ -6,3 +6,5 @@ export const MEAL_MAX_NAME_LENGTH = 200;
 export const MEAL_COMPONENT_MAX_NAME_LENGTH = 200;
 
 export const MIN_PASSWORD_LENGTH = 8;
+
+export const SHOPPING_LIST_ITEM_MAX_NAME_LENGTH = 200;
