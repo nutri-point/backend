@@ -7,8 +7,10 @@ import {
   GoalModule,
   MealModule,
   MealComponentModule,
+  ResultModule,
+  ShoppingListModule,
+  MenuModule,
 } from 'modules';
-import { MenuModule } from 'modules/menu.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { MenuModule } from 'modules/menu.module';
     UserModule,
     AuthModule,
     GoalModule,
+    ResultModule,
+    ShoppingListModule,
     MealModule,
     MealComponentModule,
     MenuModule,
