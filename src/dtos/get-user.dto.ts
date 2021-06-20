@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 import { UserWithRole } from 'utils/types';
 
 export class GetUserDto {
@@ -12,7 +12,7 @@ export class GetUserDto {
   createdAt: Date;
   updatedAt: Date;
   isActive: boolean;
-  role?: string;
+  role?: Role;
 
   constructor(model: User & Partial<UserWithRole>) {
     this.id = model.id;
@@ -25,7 +25,6 @@ export class GetUserDto {
     this.createdAt = model.createdAt;
     this.updatedAt = model.updatedAt;
     this.isActive = model.isActive;
-    // TODO: Wont be optional when role is set to be mandatory field
-    this.role = model.role?.name;
+    this.role = model.role;
   }
 }

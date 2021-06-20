@@ -1,12 +1,15 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { LogInDto, SignUpDto } from 'dtos';
-import { AuthService } from 'services';
+import { AuthService, UserService } from 'services';
 
 @ApiTags('Auth')
 @Controller()
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+  ) {}
 
   @Post('signUp')
   async signUp(@Body() signUpDto: SignUpDto) {
@@ -29,7 +32,10 @@ export class AuthController {
       password,
     );
 
+    const user = await this.userService.findByEmail(email);
+
     return {
+      user,
       accessToken,
       refreshToken,
     };

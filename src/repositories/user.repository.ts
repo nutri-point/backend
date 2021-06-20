@@ -11,11 +11,17 @@ export class UserRepository implements IRepository<User, string> {
   }
 
   getById(id: string) {
-    return this.prisma.user.findUnique({ where: { id } });
+    return this.prisma.user.findUnique({
+      where: { id },
+      include: { role: true },
+    });
   }
 
   getByEmail(email: string) {
-    return this.prisma.user.findUnique({ where: { email } });
+    return this.prisma.user.findUnique({
+      where: { email },
+      include: { role: true },
+    });
   }
 
   add(entity: UserAddType<User>) {
