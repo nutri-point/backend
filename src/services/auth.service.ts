@@ -67,7 +67,7 @@ export class AuthService {
     const user = await this.uow.userRepository.getByEmail(email);
 
     if (!user) {
-      throw new NotFoundException(`No user found for email: ${email}`);
+      throw new NotFoundException(`No user found for given email.`);
     }
 
     const passwordValid = await this.cryptoService.validateHash(

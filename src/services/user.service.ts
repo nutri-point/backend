@@ -13,6 +13,16 @@ export class UserService {
     @Inject(REQUEST) private readonly request: Request,
   ) {}
 
+  async me() {
+    const user = this.request.user as User;
+    if (!user) return null;
+
+    const model = await this.uow.userRepository.getById(user.id);
+    const dto = new GetUserDto(model);
+
+    return dto;
+  }
+
   async findAll() {
     const user = this.request.user as User;
     if (!user) return [];
