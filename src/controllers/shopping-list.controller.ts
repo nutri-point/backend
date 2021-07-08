@@ -22,6 +22,7 @@ import { FindByUserParams } from './params/find-by-user.params';
 
 @ApiTags('ShoppingList')
 @UseGuards(JwtAuthGuard, RoleGuard)
+@ApiBearerAuth()
 @Controller('shoppingList')
 export class ShoppingListController {
   constructor(private readonly shoppingListService: ShoppingListService) {}
@@ -37,7 +38,6 @@ export class ShoppingListController {
   }
 
   @Role(RoleRank.User)
-  @ApiBearerAuth()
   @Get()
   findAll() {
     return this.shoppingListService.findAll();

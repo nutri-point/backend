@@ -19,6 +19,7 @@ import { FindByUserParams } from './params/find-by-user.params';
 
 @ApiTags('Result')
 @UseGuards(JwtAuthGuard, RoleGuard)
+@ApiBearerAuth()
 @Controller('result')
 export class ResultController {
   constructor(private readonly resultService: ResultService) {}
@@ -30,7 +31,6 @@ export class ResultController {
   }
 
   @Role(RoleRank.User)
-  @ApiBearerAuth()
   @Get()
   findAll() {
     return this.resultService.findAll();
