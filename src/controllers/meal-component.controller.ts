@@ -29,13 +29,13 @@ export class MealComponentController {
     return this.mealComponentService.create(createMealComponentDto);
   }
 
-  @Role(RoleRank.User)
+  @Role(RoleRank.Member)
   @Get()
   findAll() {
     return this.mealComponentService.findAll();
   }
 
-  @Role(RoleRank.User)
+  @Role(RoleRank.Member)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.mealComponentService.findOne(id);

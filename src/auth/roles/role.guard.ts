@@ -30,12 +30,7 @@ export class RoleGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const user: User = request.user;
 
-    if (
-      user &&
-      user.isActive &&
-      user.roleId &&
-      this.hasRoleRank(user, requiredRoleRank)
-    ) {
+    if (user && user.isActive && this.hasRoleRank(user, requiredRoleRank)) {
       return true;
     }
 

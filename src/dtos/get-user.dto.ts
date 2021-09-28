@@ -1,5 +1,4 @@
-import { Role, User } from '@prisma/client';
-import { UserWithRole } from 'utils/types';
+import { User } from '@prisma/client';
 
 export class GetUserDto {
   id: string;
@@ -12,9 +11,9 @@ export class GetUserDto {
   createdAt: Date;
   updatedAt: Date;
   isActive: boolean;
-  role?: Role;
+  roleId: number;
 
-  constructor(model: User & Partial<UserWithRole>) {
+  constructor(model: User) {
     this.id = model.id;
     this.email = model.email;
     this.firstName = model.firstName;
@@ -25,6 +24,6 @@ export class GetUserDto {
     this.createdAt = model.createdAt;
     this.updatedAt = model.updatedAt;
     this.isActive = model.isActive;
-    this.role = model.role;
+    this.roleId = model.roleId;
   }
 }

@@ -1,11 +1,17 @@
 export enum RoleRank {
   Guest = 1,
-  User = 200,
+  Member = 200,
   Admin = 300,
 }
 
 export enum RoleName {
   Guest = 'Guest',
-  User = 'User',
+  Member = 'Member',
   Admin = 'Admin',
+}
+
+export enum RoleId {
+  Guest = 1,
+  Member = 2,
+  Admin = 3,
 }

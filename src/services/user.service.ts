@@ -5,6 +5,7 @@ import { User } from '@prisma/client';
 
 import { UnitOfWork } from 'repositories';
 import { GetUserDto, UpdateUserDto } from 'dtos';
+import { RoleId } from 'auth/roles/role.enum';
 
 @Injectable()
 export class UserService {
@@ -55,8 +56,14 @@ export class UserService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
+    let memberSince: Date | null = null;
+    if (updateUserDto.roleId === RoleId.Member) {
+      memberSince = new Date();
+    }
+
     await this.uow.userRepository.update(id, {
       roleId: updateUserDto.roleId,
+      memberSince,
     });
   }
 

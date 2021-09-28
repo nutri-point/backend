@@ -37,7 +37,7 @@ export class ShoppingListController {
     );
   }
 
-  @Role(RoleRank.User)
+  @Role(RoleRank.Member)
   @Get()
   findAll() {
     return this.shoppingListService.findAll();
@@ -45,13 +45,13 @@ export class ShoppingListController {
 
   // TODO: Add validation on findOne endpoints similar the one inside FindByUserParams
   // to check if entity with the ID exists and if it belongs to the user
-  @Role(RoleRank.User)
+  @Role(RoleRank.Member)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.shoppingListService.findOne(id);
   }
 
-  @Role(RoleRank.User)
+  @Role(RoleRank.Member)
   @Get('/latest')
   findLatest() {
     return this.shoppingListService.findLatest();

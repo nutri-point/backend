@@ -4,6 +4,8 @@ export type OptionsFlags<Type> = {
   [Property in keyof Type]: boolean;
 };
 
+export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
 export type PrismaSelectType<Type> = Partial<OptionsFlags<Type>>;
 
 export type MealWithComponents = Prisma.MealGetPayload<{

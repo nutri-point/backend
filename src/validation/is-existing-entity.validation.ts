@@ -16,7 +16,6 @@ export class IsExistingEntityConstraint
   constructor(private readonly unitOfWork: UnitOfWork) {}
 
   async validate(entityId: any, validationArguments?: ValidationArguments) {
-    console.log('validationArguments', validationArguments);
     const [repoName, keyType] = validationArguments.constraints;
 
     if (typeof entityId !== keyType) return false;

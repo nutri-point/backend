@@ -30,19 +30,19 @@ export class GoalController {
     return this.goalService.create(createGoalDto);
   }
 
-  @Role(RoleRank.User)
+  @Role(RoleRank.Member)
   @Get()
   findAll() {
     return this.goalService.findAll();
   }
 
-  @Role(RoleRank.User)
+  @Role(RoleRank.Member)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.goalService.findOne(id);
   }
 
-  @Role(RoleRank.User)
+  @Role(RoleRank.Member)
   @Get('/latest')
   findLatest() {
     return this.goalService.findLatest();

@@ -18,7 +18,7 @@ async function main() {
   const userRole = await prisma.role.create({
     data: {
       id: 2,
-      name: 'User',
+      name: 'Member',
       rank: 200,
     },
   });

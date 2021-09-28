@@ -25,8 +25,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     // "AuthService" is a request-scoped provider
     const authService = await this.moduleRef.resolve(AuthService, contextId);
 
-    console.log('request', request);
-
     const user = await authService.validateUser(payload.userId);
     if (!user) {
       throw new UnauthorizedException();

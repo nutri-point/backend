@@ -30,19 +30,19 @@ export class ResultController {
     return this.resultService.create(createResultDto);
   }
 
-  @Role(RoleRank.User)
+  @Role(RoleRank.Member)
   @Get()
   findAll() {
     return this.resultService.findAll();
   }
 
-  @Role(RoleRank.User)
+  @Role(RoleRank.Member)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.resultService.findOne(id);
   }
 
-  @Role(RoleRank.User)
+  @Role(RoleRank.Member)
   @Get('/latest')
   findLatest() {
     return this.resultService.findLatest();

@@ -22,13 +22,13 @@ import { RoleRank } from 'auth/roles/role.enum';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Role(RoleRank.User)
+  @Role(RoleRank.Member)
   @Get('me')
   me() {
     return this.userService.me();
   }
 
-  @Role(RoleRank.User)
+  @Role(RoleRank.Member)
   @Get()
   findAll() {
     return this.userService.findAll();
@@ -41,7 +41,7 @@ export class UserController {
   }
 
   @Role(RoleRank.Admin)
-  @Put(':id')
+  @Put(':id/role')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
   }

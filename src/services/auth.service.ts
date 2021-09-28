@@ -39,6 +39,7 @@ export class AuthService {
         weight: payload.weight,
         dateOfBirth: payload.dateOfBirth,
         passwordHash: hashedPassword,
+        roleId: 1,
       });
 
       const token = await this.generateToken({
