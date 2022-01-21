@@ -4,7 +4,7 @@ import { ShoppingListWithItems } from 'utils/types';
 export class GetShoppingListDto {
   id: string;
   userId: string;
-  items?: ShoppingListItem[];
+  items?: ShoppingListItem[]; // TODO: switch for DTO
   createdAt: Date;
   updatedAt: Date;
 

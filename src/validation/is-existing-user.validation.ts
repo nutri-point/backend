@@ -27,7 +27,7 @@ export class IsExistingUserConstraint implements ValidatorConstraintInterface {
 }
 
 export function IsExistingUser(validationOptions?: ValidationOptions) {
-  return function (object: Object, propertyName: string) {
+  return function (object: unknown, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,

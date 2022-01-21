@@ -30,7 +30,7 @@ export class IsExistingMealComponentConstraint
 }
 
 export function IsExistingMealComponent(validationOptions?: ValidationOptions) {
-  return function (object: Object, propertyName: string) {
+  return function (object: unknown, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,

@@ -10,6 +10,7 @@ export class GetUserDto {
   dateOfBirth: Date;
   createdAt: Date;
   updatedAt: Date;
+  memberSince: Date | null;
   isActive: boolean;
   roleId: number;
 
@@ -23,6 +24,7 @@ export class GetUserDto {
     this.dateOfBirth = model.dateOfBirth;
     this.createdAt = model.createdAt;
     this.updatedAt = model.updatedAt;
+    this.memberSince = model.memberSince;
     this.isActive = model.isActive;
     this.roleId = model.roleId;
   }

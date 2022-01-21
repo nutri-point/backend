@@ -27,7 +27,7 @@ export class IsExistingRoleConstraint implements ValidatorConstraintInterface {
 }
 
 export function IsExistingRole(validationOptions?: ValidationOptions) {
-  return function (object: Object, propertyName: string) {
+  return function (object: unknown, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,
